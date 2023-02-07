@@ -1,9 +1,14 @@
-import { Fragment } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { Transactions } from './pages/Transactions';
+import { GlobalStyle } from './styles/global';
+import { defaultTheme } from './styles/theme/default';
 
 export function App() {
 	return (
-		<Fragment>
-			<h1></h1>
-		</Fragment>
+		<ThemeProvider theme={defaultTheme}>
+			<Transactions />
+
+			<GlobalStyle />
+		</ThemeProvider>
 	);
 }
