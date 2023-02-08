@@ -1,4 +1,6 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import { LogoIgnite } from '~/assets';
+import { NewTransactionModal } from '../NewTransactionModal';
 import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles';
 
 export function Header() {
@@ -6,7 +8,14 @@ export function Header() {
 		<HeaderContainer>
 			<HeaderContent>
 				<img src={LogoIgnite} alt="Logo Ignite" />
-				<NewTransactionButton>Nova Transação</NewTransactionButton>
+
+				<Dialog.Root>
+					<Dialog.Trigger asChild>
+						<NewTransactionButton>Nova Transação</NewTransactionButton>
+					</Dialog.Trigger>
+
+					<NewTransactionModal />
+				</Dialog.Root>
 			</HeaderContent>
 		</HeaderContainer>
 	);
