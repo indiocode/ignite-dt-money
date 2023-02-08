@@ -7,7 +7,10 @@ export function Header() {
 	return (
 		<HeaderContainer>
 			<HeaderContent>
-				<img src={LogoIgnite} alt="Logo Ignite" />
+				<img
+					src={LogoIgnite}
+					alt="Logo Ignite"
+				/>
 
 				<Dialog.Root>
 					<Dialog.Trigger asChild>
