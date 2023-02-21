@@ -1,9 +1,12 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import type { ReactElement } from 'react';
+
 import { LogoIgnite } from '~/assets';
-import { NewTransactionModal } from '../NewTransactionModal';
+import { NewTransactionModal } from '~/components/NewTransactionModal';
+
 import { HeaderContainer, HeaderContent, NewTransactionButton } from './styles';
 
-export function Header() {
+export function Header(): ReactElement {
 	return (
 		<HeaderContainer>
 			<HeaderContent>

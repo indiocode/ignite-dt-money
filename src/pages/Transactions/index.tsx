@@ -1,17 +1,19 @@
+import type { ReactElement } from 'react';
 import { useContextSelector } from 'use-context-selector';
+
 import { Header } from '~/components/Header';
 import { Summary } from '~/components/Summary';
 import { TransactionsContext } from '~/contexts/TransactionsContext';
 import { dateFormatter, priceFormatter } from '~/utils/Formatter';
-import { SearchForm } from './components/SearchForm';
 
+import { SearchForm } from './components/SearchForm';
 import {
 	PriceHighlight,
 	TransactionsContainer,
 	TransactionsTable,
 } from './styles';
 
-export function Transactions() {
+export function Transactions(): ReactElement {
 	const transactions = useContextSelector(
 		TransactionsContext,
 		(context) => context.transactions,
@@ -36,7 +38,11 @@ export function Transactions() {
 										{priceFormatter.format(transaction.price)}
 									</PriceHighlight>
 								</td>
-								<td>{dateFormatter.format(new Date(transaction.createdAt))}</td>
+								<td>
+									{dateFormatter.format(
+										new Date(transaction.createdAt as Date),
+									)}
+								</td>
 							</tr>
 						))}
 					</tbody>

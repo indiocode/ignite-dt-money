@@ -31,6 +31,14 @@
       "type": "outcome",
       "createdAt": "2023-02-08T04:29:39.008Z",
       "id": 4
+    },
+    {
+      "description": "fsdfsdf",
+      "price": 34534,
+      "category": "sa",
+      "type": "outcome",
+      "createdAt": "2023-02-21T19:28:42.928Z",
+      "id": 5
     }
   ]
 }

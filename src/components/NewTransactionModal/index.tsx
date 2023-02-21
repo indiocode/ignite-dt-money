@@ -1,8 +1,14 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import * as Dialog from '@radix-ui/react-dialog';
 import { ArrowCircleDown, ArrowCircleUp, X } from 'phosphor-react';
+import type { ReactElement } from 'react';
+import type { UseControllerReturn } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useContextSelector } from 'use-context-selector';
+import * as zod from 'zod';
+
+import { TransactionsContext } from '~/contexts/TransactionsContext';
+
 import {
 	CloseButton,
 	Content,
@@ -10,10 +16,6 @@ import {
 	TransactionType,
 	TransactionTypeButton,
 } from './styles';
-
-import { Controller, useForm } from 'react-hook-form';
-import { TransactionsContext } from '~/contexts/TransactionsContext';
-import { useContextSelector } from 'use-context-selector';
 
 const newTransactionFormSchema = zod.object({
 	description: zod.string(),
@@ -24,7 +26,12 @@ const newTransactionFormSchema = zod.object({
 
 type NewTransactionFormInputs = zod.infer<typeof newTransactionFormSchema>;
 
-export function NewTransactionModal() {
+type RenderTransactionTypeProps = UseControllerReturn<
+	NewTransactionFormInputs,
+	'type'
+>;
+
+export function NewTransactionModal(): ReactElement {
 	const createNewTransaction = useContextSelector(
 		TransactionsContext,
 		(context) => context.createNewTransaction,
@@ -43,10 +50,38 @@ export function NewTransactionModal() {
 		},
 	});
 
-	async function handleNewTransaction(data: NewTransactionFormInputs) {
+	async function handleNewTransaction(
+		data: NewTransactionFormInputs,
+	): Promise<void> {
 		await createNewTransaction(data);
 		reset();
 	}
+
+	const renderTransactionType = ({
+		field: { onChange, value },
+	}: RenderTransactionTypeProps): ReactElement => {
+		return (
+			<TransactionType
+				onValueChange={onChange}
+				value={value}
+			>
+				<TransactionTypeButton
+					variant="income"
+					value="income"
+				>
+					<ArrowCircleUp size={24} />
+					Entrada
+				</TransactionTypeButton>
+				<TransactionTypeButton
+					variant="outcome"
+					value="outcome"
+				>
+					<ArrowCircleDown size={24} />
+					Saída
+				</TransactionTypeButton>
+			</TransactionType>
+		);
+	};
 
 	return (
 		<Dialog.Portal>
@@ -82,29 +117,7 @@ export function NewTransactionModal() {
 					<Controller
 						control={control}
 						name="type"
-						render={({ field: { onChange, value } }) => {
-							return (
-								<TransactionType
-									onValueChange={onChange}
-									value={value}
-								>
-									<TransactionTypeButton
-										variant="income"
-										value="income"
-									>
-										<ArrowCircleUp size={24} />
-										Entrada
-									</TransactionTypeButton>
-									<TransactionTypeButton
-										variant="outcome"
-										value="outcome"
-									>
-										<ArrowCircleDown size={24} />
-										Saída
-									</TransactionTypeButton>
-								</TransactionType>
-							);
-						}}
+						render={renderTransactionType}
 					/>
 
 					<button

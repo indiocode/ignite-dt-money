@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createContext } from 'use-context-selector';
+
 import { api } from '~/lib/axios';
 
 interface Transaction {
@@ -24,7 +26,9 @@ interface TransactionsProviderProps {
 	children: ReactNode;
 }
 
-export function TransactionsProvider({ children }: TransactionsProviderProps) {
+export function TransactionsProvider({
+	children,
+}: TransactionsProviderProps): ReactElement {
 	const [transactions, setTransactions] = useState<Transaction[]>([]);
 
 	const fetchTransactions = useCallback(
